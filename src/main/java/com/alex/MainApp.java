@@ -1,24 +1,35 @@
 package com.alex;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Lazy;
 
-public class MainApp extends Application {
+@Lazy
+@SpringBootApplication
+public class MainApp extends AbstractJavaFxApplicationSupport {
 
-    public static void main(String[] args) throws Exception {
-        launch(args);
-    }
+    @Value("${ui.title:JavaFX приложение}")
+    private String windowTitle;
+
+    @Qualifier("mainView")
+    @Autowired
+    private ConfigurationControllers.View view;
 
     @Override
     public void start(Stage stage) throws Exception {
-        String fxmlFile = "/fxml/main.fxml";
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("CV Mail Sender");
-        stage.setScene(new Scene(root));
+        stage.setTitle(windowTitle);
+        stage.setScene(new Scene(view.getView()));
+        stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
+
+    public static void main(String[] args) {
+        launchApp(MainApp.class, args);
+    }
+
 }
