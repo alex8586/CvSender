@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alex.MainController">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -19,7 +19,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="600.0" />
             </content>
           </Tab>
-            <Tab fx:id="companies" text="Companies">
+            <Tab text="Companies">
                <content>
                   <AnchorPane prefHeight="600.0" prefWidth="600.0">
                      <children>
@@ -45,7 +45,7 @@
                                     <TextField fx:id="companyName" layoutX="14.0" layoutY="36.0" promptText="company" />
                                     <TextField fx:id="companyMail" layoutX="14.0" layoutY="72.0" promptText="mail" />
                                     <TextField fx:id="companyPhone" layoutX="14.0" layoutY="105.0" promptText="phone" />
-                                    <Button fx:id="addCompany" layoutX="125.0" layoutY="143.0" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="add" layoutX="125.0" layoutY="143.0" mnemonicParsing="false" text="Add" onAction="#saveCompany" />
                                  </children>
                               </AnchorPane>
                           </items>
