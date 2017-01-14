@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Lazy;
 @SpringBootApplication
 public class MainApp extends AbstractJavaFxApplicationSupport {
 
-    @Value("${ui.title:JavaFX приложение}")
+    @Value("${ui.title:Mail Sender}")
     private String windowTitle;
 
     @Qualifier("mainView")

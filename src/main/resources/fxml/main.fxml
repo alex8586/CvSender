@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Send CV">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="213.0" prefWidth="600.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="600.0" />
             </content>
           </Tab>
           <Tab text="History">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="600.0" />
             </content>
           </Tab>
-            <Tab text="Companies">
+            <Tab fx:id="companies" text="Companies">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="600.0" prefWidth="600.0">
+                     <children>
+                        <SplitPane dividerPositions="0.677257525083612" layoutX="185.0" layoutY="6.0" prefHeight="171.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TableView layoutX="45.0" layoutY="-15.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn prefWidth="35.0" resizable="false" text="id" />
+                                        <TableColumn prefWidth="122.0" resizable="false" text="company" />
+                                          <TableColumn prefWidth="122.0" resizable="false" text="mail" />
+                                          <TableColumn prefWidth="122.0" resizable="false" text="phone" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="369.0" prefWidth="201.0">
+                                 <children>
+                                    <TextField fx:id="companyName" layoutX="14.0" layoutY="36.0" promptText="company" />
+                                    <TextField fx:id="companyMail" layoutX="14.0" layoutY="72.0" promptText="mail" />
+                                    <TextField fx:id="companyPhone" layoutX="14.0" layoutY="105.0" promptText="phone" />
+                                    <Button fx:id="addCompany" layoutX="125.0" layoutY="143.0" mnemonicParsing="false" text="Add" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>
