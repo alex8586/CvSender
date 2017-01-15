@@ -24,6 +24,8 @@ public class MainApp extends AbstractJavaFxApplicationSupport {
         stage.setTitle(windowTitle);
         stage.setScene(new Scene(view.getView()));
         stage.setResizable(true);
+        stage.setMinWidth(600);
+        stage.setMinHeight(400);
         stage.centerOnScreen();
         stage.show();
     }

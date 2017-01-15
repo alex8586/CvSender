@@ -14,7 +14,7 @@ public class MainController {
     private TextField companyName;
 
     @FXML
-    private TextField companyMail;
+    private TextField companyEmail;
 
     @FXML
     private TextField companyPhone;
@@ -26,13 +26,13 @@ public class MainController {
     public void saveCompany() {
         Company company = new Company();
         company.setName(companyName.getText());
-        company.setMail(companyMail.getText());
+        company.setMail(companyEmail.getText());
         company.setPhone(companyPhone.getText());
-
+        System.out.println(company.toString());
         companyService.addCompany(company);
 
         companyName.setText("");
-        companyMail.setText("");
+        companyEmail.setText("");
         companyPhone.setText("");
     }
 }
