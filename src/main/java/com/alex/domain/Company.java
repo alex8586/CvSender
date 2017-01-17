@@ -1,5 +1,10 @@
 package com.alex.domain;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,12 +30,20 @@ public class Company {
         this.id = id;
     }
 
+    public LongProperty idProperty(){
+        return new SimpleLongProperty(id);
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public StringProperty nameProperty(){
+        return new SimpleStringProperty(name);
     }
 
     public String getEmail() {
@@ -41,12 +54,20 @@ public class Company {
         this.email = email;
     }
 
+    public StringProperty emailProperty(){
+        return new SimpleStringProperty(email);
+    }
+
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public StringProperty phoneProperty(){
+        return new SimpleStringProperty(phone);
     }
 
     @Override

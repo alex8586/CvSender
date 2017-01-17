@@ -5,6 +5,7 @@ import com.alex.service.CompanyService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -42,7 +43,7 @@ public class MainController{
     @Autowired
     private CompanyService companyService;
 
-    private ObservableList<Company> list = FXCollections.observableArrayList();
+    private ObservableList<Company> observableList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(){
@@ -55,24 +56,37 @@ public class MainController{
         name.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
         email.setCellValueFactory(new PropertyValueFactory<Company, String>("email"));
         phone.setCellValueFactory(new PropertyValueFactory<Company, String>("phone"));
-
-        list.addAll(companyService.getAll());
-        tableCompanies.setItems(list);
+        tableCompanies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        observableList.addAll(companyService.getAll());
+        tableCompanies.setItems(observableList);
     }
 
     @FXML
     public void saveCompany() {
+        if(companyName.getText().equals("") && companyEmail.getText().equals("") && companyPhone.getText().equals(""))
+            return;
+
         Company company = new Company();
         company.setName(companyName.getText());
         company.setEmail(companyEmail.getText());
         company.setPhone(companyPhone.getText());
-
         companyService.addCompany(company);
-        list.add(company);
+        observableList.add(company);
 
         companyName.setText("");
         companyEmail.setText("");
         companyPhone.setText("");
+    }
+
+    @FXML
+    public void removeSelected(){
+        Company company = tableCompanies.getSelectionModel().getSelectedItem();
+        tableCompanies.getSelectionModel().clearSelection();
+        if(company == null)
+            return;
+        companyService.delete(company.getId());
+
+        observableList.remove(company);
     }
 }
 
