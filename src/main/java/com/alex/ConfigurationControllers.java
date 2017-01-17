@@ -1,5 +1,6 @@
 package com.alex;
 
+import com.alex.controlers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import org.springframework.context.annotation.Bean;

@@ -12,8 +12,8 @@ public class Company {
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "mail")
-    private String mail;
+    @Column(name = "email")
+    private String email;
     @Column(name = "phone")
     private String phone;
 
@@ -33,12 +33,12 @@ public class Company {
         this.name = name;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -54,7 +54,7 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", mail='" + mail + '\'' +
+                ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
     }

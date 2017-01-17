@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Lazy;
 
@@ -12,16 +11,13 @@ import org.springframework.context.annotation.Lazy;
 @SpringBootApplication
 public class MainApp extends AbstractJavaFxApplicationSupport {
 
-    @Value("${ui.title:Mail Sender}")
-    private String windowTitle;
-
     @Qualifier("mainView")
     @Autowired
     private ConfigurationControllers.View view;
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle(windowTitle);
+        stage.setTitle("Mail Sender");
         stage.setScene(new Scene(view.getView()));
         stage.setResizable(true);
         stage.setMinWidth(600);
