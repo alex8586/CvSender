@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 public class MainController{
 
@@ -42,6 +43,9 @@ public class MainController{
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private EditCompanyController editCompanyController;
 
     private ObservableList<Company> observableList = FXCollections.observableArrayList();
 
@@ -85,8 +89,19 @@ public class MainController{
         if(company == null)
             return;
         companyService.delete(company.getId());
-
         observableList.remove(company);
+    }
+
+    @FXML
+    public void editCompany() throws IOException {
+        Company company = tableCompanies.getSelectionModel().getSelectedItem();
+        if(company == null)
+            return;
+        editCompanyController.openModal(company);
+    }
+
+    public ObservableList getObserableList(){
+        return observableList;
     }
 }
 
