@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.Node?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alex.controlers.MainController">
   <tabs>
@@ -32,7 +33,7 @@
                           <columns>
                             <TableColumn fx:id="id" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" text="id" />
                             <TableColumn fx:id="name" prefWidth="183.0" text="company" />
-                              <TableColumn fx:id="email" minWidth="0.0" prefWidth="183.0" text="email" />
+                              <TableColumn fx:id="email" prefWidth="183.0" text="email" />
                               <TableColumn fx:id="phone" prefWidth="183.0" text="phone" />
                           </columns>
                            <columnResizePolicy>
@@ -47,7 +48,33 @@
                </children>
             </VBox>
          </content></Tab>
-    <Tab text="Send CV" />
-      <Tab text="History" />
+      <Tab text="Send CV">
+         <content>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="300.0">
+                     <children>
+                        <TextField fx:id="fromField" layoutX="66.0" layoutY="27.0" prefHeight="25.0" prefWidth="208.0" promptText="from" />
+                        <TextField fx:id="subjectField" layoutX="67.0" layoutY="62.0" prefHeight="25.0" prefWidth="207.0" promptText="subject" />
+                         <TextArea fx:id="messageField" layoutX="23.0" layoutY="128.0" prefHeight="175.0" prefWidth="255.0" />
+                        <Button fx:id="sendCv" layoutX="170.0" layoutY="317.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="80.0" text="Send" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <TableView fx:id="sentCv" layoutX="42.0" layoutY="46.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn prefWidth="80.0" text="last sent" />
+                              <TableColumn fx:id="company" prefWidth="220.0" text="company" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </content></Tab>
   </tabs>
 </TabPane>

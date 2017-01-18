@@ -2,12 +2,13 @@ package com.alex.controlers;
 
 import com.alex.domain.Company;
 import com.alex.service.CompanyService;
+import com.alex.service.MailSendService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,32 @@ public class MainController{
     @FXML
     private TableView<Company> tableCompanies;
 
+    @FXML
+    private TableView<Company> sentCv;
+
+    @FXML
+    private TableColumn<Company, String> company;
+
+    @FXML
+    private TextField fromField;
+
+    @FXML
+    private TextField toField;
+
+    @FXML
+    private TextField subjectField;
+
+    @FXML
+    private TextArea messageField;
+
     @Autowired
     private CompanyService companyService;
 
     @Autowired
     private EditCompanyController editCompanyController;
+
+    @Autowired
+    private MailSendService mailSendService;
 
     private ObservableList<Company> observableList = FXCollections.observableArrayList();
 
@@ -60,9 +82,11 @@ public class MainController{
         name.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
         email.setCellValueFactory(new PropertyValueFactory<Company, String>("email"));
         phone.setCellValueFactory(new PropertyValueFactory<Company, String>("phone"));
-        tableCompanies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         observableList.addAll(companyService.getAll());
         tableCompanies.setItems(observableList);
+
+        company.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
+        sentCv.setItems(observableList);
     }
 
     @FXML
@@ -102,6 +126,16 @@ public class MainController{
 
     public ObservableList getObserableList(){
         return observableList;
+    }
+
+    @FXML
+    public void sendMessage(){
+        Company selected = sentCv.getSelectionModel().selectedItemProperty().getValue();
+        String from = fromField.getText();
+        String to = selected.getEmail();
+        String subject = subjectField.getText();
+        String textMessage = messageField.getText();
+        mailSendService.sendEmail(from, to, subject, textMessage);
     }
 }
 
