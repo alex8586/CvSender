@@ -6,14 +6,13 @@ import com.alex.service.MailSendService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 
 public class MainController{
@@ -59,6 +58,12 @@ public class MainController{
 
     @FXML
     private TextArea messageField;
+
+    @FXML
+    private Button browse;
+
+    @FXML
+    private TextField filePath;
 
     @Autowired
     private CompanyService companyService;
@@ -135,7 +140,18 @@ public class MainController{
         String to = selected.getEmail();
         String subject = subjectField.getText();
         String textMessage = messageField.getText();
-        mailSendService.sendEmail(from, to, subject, textMessage);
+        String attached = filePath.getText();
+        mailSendService.sendEmail(from, to, subject, textMessage, attached);
+    }
+
+    public void attachFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("choose file");
+        File file = fileChooser.showOpenDialog(browse.getScene().getWindow());
+        if(file != null){
+            String filePath = file.getPath();
+            this.filePath.setText(filePath);
+        }
     }
 }
 

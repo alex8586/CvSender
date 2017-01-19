@@ -2,9 +2,14 @@ package com.alex.service;
 
 import org.springframework.stereotype.Component;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 @Component
@@ -12,7 +17,7 @@ public class MailSendService {
 
     private Properties props = new Properties();
 
-    public void sendEmail(String from, String to, String subject, String textMessage) {
+    public void sendEmail(String from, String to, String subject, String textMessage, String filePath) {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -22,7 +27,7 @@ public class MailSendService {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication();//type your login and password here
+                        return new PasswordAuthentication("","");//type your login and password here
                     }
                 });
 
@@ -31,10 +36,20 @@ public class MailSendService {
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setText(textMessage);
 
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(textMessage);
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            messageBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(filePath);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(filePath);
+            multipart.addBodyPart(messageBodyPart);
+
+            message.setContent(multipart);
             Transport.send(message);
-
             System.out.println("Done");
 
         } catch (MessagingException e) {
