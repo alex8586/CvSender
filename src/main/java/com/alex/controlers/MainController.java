@@ -2,7 +2,6 @@ package com.alex.controlers;
 
 import com.alex.domain.Company;
 import com.alex.service.CompanyService;
-import com.alex.service.MailSendService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class MainController{
 
@@ -48,6 +49,9 @@ public class MainController{
     private TableColumn<Company, String> company;
 
     @FXML
+    private TableColumn<Company, Date> lastSent;
+
+    @FXML
     private TextField fromField;
 
     @FXML
@@ -65,16 +69,19 @@ public class MainController{
     @FXML
     private TextField filePath;
 
+    @FXML
+    private Label successfully;
+
     @Autowired
     private CompanyService companyService;
 
     @Autowired
     private EditCompanyController editCompanyController;
 
-    @Autowired
-    private MailSendService mailSendService;
-
     private ObservableList<Company> observableList = FXCollections.observableArrayList();
+
+    private LocalDate localDate;
+    private Date date;
 
     @FXML
     public void initialize(){
@@ -88,10 +95,15 @@ public class MainController{
         email.setCellValueFactory(new PropertyValueFactory<Company, String>("email"));
         phone.setCellValueFactory(new PropertyValueFactory<Company, String>("phone"));
         observableList.addAll(companyService.getAll());
+        observableList.stream().forEach(System.out::println);
         tableCompanies.setItems(observableList);
 
         company.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
+        lastSent.setCellValueFactory(new PropertyValueFactory<Company, Date>("lastTimeSent"));
         sentCv.setItems(observableList);
+
+        sentCv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        successfully.setText("");
     }
 
     @FXML
@@ -135,13 +147,23 @@ public class MainController{
 
     @FXML
     public void sendMessage(){
-        Company selected = sentCv.getSelectionModel().selectedItemProperty().getValue();
-        String from = fromField.getText();
-        String to = selected.getEmail();
-        String subject = subjectField.getText();
-        String textMessage = messageField.getText();
-        String attached = filePath.getText();
-        mailSendService.sendEmail(from, to, subject, textMessage, attached);
+        ObservableList<Company> companyList = sentCv.getSelectionModel().getSelectedItems();
+
+        for(Company selected : companyList) {
+            String from = fromField.getText();
+            String to = selected.getEmail();
+            String subject = subjectField.getText();
+            String textMessage = messageField.getText();
+            String attached = filePath.getText();
+//            mailSendService.sendEmail(from, to, subject, textMessage, attached);
+
+            selected.setLastTimeSent(new Date());
+            Company updated = companyService.editCompany(selected);
+            observableList.remove(selected);
+            observableList.add(updated);
+        }
+
+        successfully.setText("Mail was sent");
     }
 
     public void attachFile(){

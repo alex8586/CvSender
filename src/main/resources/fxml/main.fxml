@@ -66,7 +66,7 @@
                      <children>
                         <TableView fx:id="sentCv" layoutX="42.0" layoutY="46.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn prefWidth="80.0" text="last sent" />
+                            <TableColumn fx:id="lastSent" prefWidth="80.0" text="last sent" />
                               <TableColumn fx:id="company" prefWidth="220.0" text="company" />
                           </columns>
                            <columnResizePolicy>

@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "companies")
@@ -21,6 +22,9 @@ public class Company {
     private String email;
     @Column(name = "phone")
     private String phone;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "last_sent")
+    private Date lastTimeSent;
 
     public long getId() {
         return id;
@@ -70,6 +74,14 @@ public class Company {
         return new SimpleStringProperty(phone);
     }
 
+    public Date getLastTimeSent() {
+        return lastTimeSent;
+    }
+
+    public void setLastTimeSent(Date lastTimeSent) {
+        this.lastTimeSent = lastTimeSent;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -77,6 +89,7 @@ public class Company {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", lastTimeSent=" + lastTimeSent +
                 '}';
     }
 }
