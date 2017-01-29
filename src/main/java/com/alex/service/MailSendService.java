@@ -36,19 +36,22 @@ public class MailSendService {
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
+            if(!filePath.equals("")) {
+                BodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setText(textMessage);
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
 
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText(textMessage);
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
+                messageBodyPart = new MimeBodyPart();
+                DataSource source = new FileDataSource(filePath);
+                messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName(filePath);
+                multipart.addBodyPart(messageBodyPart);
 
-            messageBodyPart = new MimeBodyPart();
-            DataSource source = new FileDataSource(filePath);
-            messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(filePath);
-            multipart.addBodyPart(messageBodyPart);
-
-            message.setContent(multipart);
+                message.setContent(multipart);
+            }else {
+                message.setText(textMessage);
+            }
             Transport.send(message);
             System.out.println("Done");
 

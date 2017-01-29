@@ -2,6 +2,7 @@ package com.alex.controlers;
 
 import com.alex.domain.Company;
 import com.alex.service.CompanyService;
+import com.alex.service.MailSendService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -77,6 +78,9 @@ public class MainController{
 
     @Autowired
     private EditCompanyController editCompanyController;
+
+    @Autowired
+    private MailSendService mailSendService;
 
     private ObservableList<Company> observableList = FXCollections.observableArrayList();
 
@@ -155,14 +159,13 @@ public class MainController{
             String subject = subjectField.getText();
             String textMessage = messageField.getText();
             String attached = filePath.getText();
-//            mailSendService.sendEmail(from, to, subject, textMessage, attached);
+            mailSendService.sendEmail(from, to, subject, textMessage, attached);
 
             selected.setLastTimeSent(new Date());
             Company updated = companyService.editCompany(selected);
             observableList.remove(selected);
             observableList.add(updated);
         }
-
         successfully.setText("Mail was sent");
     }
 

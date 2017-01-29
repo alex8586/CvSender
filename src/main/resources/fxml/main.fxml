@@ -56,10 +56,14 @@
                      <children>
                         <TextField fx:id="fromField" layoutX="66.0" layoutY="27.0" prefHeight="25.0" prefWidth="208.0" promptText="from" />
                         <TextField fx:id="subjectField" layoutX="67.0" layoutY="62.0" prefHeight="25.0" prefWidth="207.0" promptText="subject" />
-                         <TextArea fx:id="messageField" layoutX="23.0" layoutY="129.0" prefHeight="175.0" prefWidth="255.0" />
-                        <Button fx:id="sendCv" layoutX="170.0" layoutY="317.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="80.0" text="Send" />
+                         <TextArea fx:id="messageField" layoutX="23.0" layoutY="149.0" prefHeight="125.0" prefWidth="255.0" />
+                        <Button fx:id="sendCv" layoutX="154.0" layoutY="287.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="80.0" text="Send" />
                         <TextField fx:id="filePath" layoutX="23.0" layoutY="95.0" />
                          <Button fx:id="browse" layoutX="194.0" layoutY="95.0" mnemonicParsing="false" onAction="#attachFile" prefWidth="80.0" text="Browse" />
+                         <Label layoutX="23.0" layoutY="31.0" text="From" />
+                         <Label layoutX="23.0" layoutY="66.0" text="Subject" />
+                         <Label layoutX="23.0" layoutY="128.0" text="Text message" />
+                         <Label fx:id="successfully" layoutX="156.0" layoutY="326.0" prefHeight="17.0" prefWidth="115.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
