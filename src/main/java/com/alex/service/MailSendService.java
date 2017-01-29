@@ -53,7 +53,6 @@ public class MailSendService {
                 message.setText(textMessage);
             }
             Transport.send(message);
-            System.out.println("Done");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

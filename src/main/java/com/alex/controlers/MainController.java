@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class MainController{
@@ -56,9 +55,6 @@ public class MainController{
     private TextField fromField;
 
     @FXML
-    private TextField toField;
-
-    @FXML
     private TextField subjectField;
 
     @FXML
@@ -83,9 +79,6 @@ public class MainController{
     private MailSendService mailSendService;
 
     private ObservableList<Company> observableList = FXCollections.observableArrayList();
-
-    private LocalDate localDate;
-    private Date date;
 
     @FXML
     public void initialize(){

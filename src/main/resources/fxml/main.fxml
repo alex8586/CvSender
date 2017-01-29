@@ -22,9 +22,9 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="50.0">
                      <children>
-                        <Button fx:id="add" layoutX="453.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveCompany" prefHeight="25.0" prefWidth="80.0" text="Add" textAlignment="CENTER" />
-                        <Button fx:id="remove" layoutX="330.0" layoutY="13.0" mnemonicParsing="false" onAction="#removeSelected" prefHeight="25.0" prefWidth="80.0" text="Remove" textAlignment="CENTER" />
-                        <Button fx:id="edit" layoutX="200.0" layoutY="13.0" mnemonicParsing="false" onAction="#editCompany" prefHeight="25.0" prefWidth="80.0" text="Edit" textAlignment="CENTER" />
+                        <Button layoutX="453.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveCompany" prefHeight="25.0" prefWidth="80.0" text="Add" textAlignment="CENTER" />
+                        <Button layoutX="330.0" layoutY="13.0" mnemonicParsing="false" onAction="#removeSelected" prefHeight="25.0" prefWidth="80.0" text="Remove" textAlignment="CENTER" />
+                        <Button layoutX="200.0" layoutY="13.0" mnemonicParsing="false" onAction="#editCompany" prefHeight="25.0" prefWidth="80.0" text="Edit" textAlignment="CENTER" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -57,7 +57,7 @@
                         <TextField fx:id="fromField" layoutX="66.0" layoutY="27.0" prefHeight="25.0" prefWidth="208.0" promptText="from" />
                         <TextField fx:id="subjectField" layoutX="67.0" layoutY="62.0" prefHeight="25.0" prefWidth="207.0" promptText="subject" />
                          <TextArea fx:id="messageField" layoutX="23.0" layoutY="149.0" prefHeight="125.0" prefWidth="255.0" />
-                        <Button fx:id="sendCv" layoutX="154.0" layoutY="287.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="80.0" text="Send" />
+                        <Button layoutX="154.0" layoutY="287.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="80.0" text="Send" />
                         <TextField fx:id="filePath" layoutX="23.0" layoutY="95.0" />
                          <Button fx:id="browse" layoutX="194.0" layoutY="95.0" mnemonicParsing="false" onAction="#attachFile" prefWidth="80.0" text="Browse" />
                          <Label layoutX="23.0" layoutY="31.0" text="From" />

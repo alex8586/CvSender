@@ -55,7 +55,6 @@ public class EditCompanyController {
 
     @FXML
     public void openModal(Company company) throws IOException {
-        System.out.println("initialize ");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(EditCompanyController.class.getResource("/fxml/editCompany.fxml"));
         AnchorPane anchorPane = (AnchorPane) loader.load();
@@ -75,10 +74,8 @@ public class EditCompanyController {
         companyName.setText(company.getName());
         companyEmail.setText(company.getEmail());
         companyPhone.setText(company.getPhone());
-        System.out.println("company id" + company.getId());
         idLabel.setText(String.valueOf(company.getId()));
 
-        System.out.println("in modal " + company.toString());
         stage.show();
     }
 
