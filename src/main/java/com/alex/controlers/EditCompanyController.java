@@ -2,6 +2,7 @@ package com.alex.controlers;
 
 import com.alex.ConfigurationControllers;
 import com.alex.domain.Company;
+import com.alex.repositories.ObservableDataImpl;
 import com.alex.service.CompanyService;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,7 +43,6 @@ public class EditCompanyController {
     @FXML
     private AnchorPane editTable;
 
-
     @Autowired
     @Qualifier("editCompany")
     private ConfigurationControllers.View view;
@@ -51,7 +51,7 @@ public class EditCompanyController {
     private CompanyService companyService;
 
     @Autowired
-    private MainController mainController;
+    private ObservableDataImpl observableDataImpl;
 
     @FXML
     public void openModal(Company company) throws IOException {
@@ -88,7 +88,7 @@ public class EditCompanyController {
         company.setPhone(companyPhone.getText());
 
         companyService.editCompany(company);
-        ObservableList<Company> list = mainController.getObserableList();
+        ObservableList<Company> list = observableDataImpl.getAll();
         list.clear();
         list.addAll(companyService.getAll());
 
