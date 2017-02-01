@@ -1,7 +1,7 @@
 package com.alex.controlers;
 
 import com.alex.domain.Company;
-import com.alex.repositories.ObservableDataImpl;
+import com.alex.repositories.ObservableData;
 import com.alex.service.CompanyService;
 import com.alex.service.MailSendService;
 import javafx.collections.ObservableList;
@@ -46,10 +46,16 @@ public class MainController{
     private TableView<Company> sentCv;
 
     @FXML
+    private TableColumn<Company, Long> sendCvId;
+
+    @FXML
     private TableColumn<Company, String> company;
 
     @FXML
     private TableColumn<Company, Date> lastSent;
+
+    @FXML
+    private TableColumn<Company, Integer> times;
 
     @FXML
     private TextField fromField;
@@ -79,7 +85,7 @@ public class MainController{
     private MailSendService mailSendService;
 
     @Autowired
-    private ObservableDataImpl observableDataImpl;
+    private ObservableData observableData;
 
     @SuppressWarnings("unchecked")
     @PostConstruct
@@ -88,12 +94,15 @@ public class MainController{
         name.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
         email.setCellValueFactory(new PropertyValueFactory<Company, String>("email"));
         phone.setCellValueFactory(new PropertyValueFactory<Company, String>("phone"));
-        observableDataImpl.addAll(companyService.getAll());
-        tableCompanies.setItems(observableDataImpl.getAll());
+        observableData.addAll(companyService.getAll());
+        tableCompanies.setItems(observableData.getAll());
 
+        sendCvId.setCellValueFactory(new PropertyValueFactory<Company, Long>("id"));
         company.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
         lastSent.setCellValueFactory(new PropertyValueFactory<Company, Date>("lastTimeSent"));
-        sentCv.setItems(observableDataImpl.getAll());
+        times.setCellValueFactory(new PropertyValueFactory<Company, Integer>("timesSent"));
+
+        sentCv.setItems(observableData.getAll());
 
         sentCv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         successfully.setText("");
@@ -108,8 +117,9 @@ public class MainController{
         company.setName(companyName.getText());
         company.setEmail(companyEmail.getText());
         company.setPhone(companyPhone.getText());
+        company.setTimesSent(0);
         companyService.addCompany(company);
-        observableDataImpl.add(company);
+        observableData.add(company);
 
         companyName.setText("");
         companyEmail.setText("");
@@ -123,7 +133,7 @@ public class MainController{
         if(company == null)
             return;
         companyService.delete(company.getId());
-        observableDataImpl.remove(company);
+        observableData.remove(company);
     }
 
     @FXML
@@ -147,10 +157,11 @@ public class MainController{
             mailSendService.sendEmail(from, to, subject, textMessage, attached);
 
             selected.setLastTimeSent(new Date());
-            Company updated = companyService.editCompany(selected);
-            observableDataImpl.remove(selected);
-            observableDataImpl.add(updated);
+            selected.setTimesSent(selected.getTimesSent() + 1);
+            companyService.editCompany(selected);
         }
+        observableData.clear();
+        observableData.addAll(companyService.getAll());
         successfully.setText("Mail was sent");
     }
 

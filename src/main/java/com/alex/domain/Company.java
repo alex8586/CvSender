@@ -25,6 +25,8 @@ public class Company {
     @Temporal(TemporalType.DATE)
     @Column(name = "last_sent")
     private Date lastTimeSent;
+    @Column(name = "times_sent",nullable = false, columnDefinition = "int default 0")
+    private Integer timesSent;
 
     public long getId() {
         return id;
@@ -82,6 +84,14 @@ public class Company {
         this.lastTimeSent = lastTimeSent;
     }
 
+    public Integer getTimesSent() {
+        return timesSent;
+    }
+
+    public void setTimesSent(Integer timesSent) {
+        this.timesSent = timesSent;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -90,6 +100,7 @@ public class Company {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", lastTimeSent=" + lastTimeSent +
+                ", timesSent=" + timesSent +
                 '}';
     }
 }

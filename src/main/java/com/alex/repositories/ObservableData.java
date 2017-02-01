@@ -14,4 +14,6 @@ public interface ObservableData {
     void addAll(List<Company> companies);
 
     ObservableList<Company> getAll();
+
+    void clear();
 }

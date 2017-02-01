@@ -3,11 +3,12 @@ USE cv_sender;
 
 CREATE TABLE companies
 (
-  id        BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  name      VARCHAR(50) NOT NULL ,
-  email     VARCHAR(30) NOT NULL ,
-  phone     VARCHAR(15) NOT NULL,
-  sent_date DATE
+  id          BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  name        VARCHAR(50) NOT NULL ,
+  email       VARCHAR(30) NOT NULL ,
+  phone       VARCHAR(15) NOT NULL,
+  sent_date   DATE,
+  times_sent  INT DEFAULT 0
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 1;
