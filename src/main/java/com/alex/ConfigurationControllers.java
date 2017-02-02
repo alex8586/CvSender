@@ -1,6 +1,7 @@
 package com.alex;
 
-import com.alex.controlers.EditCompanyController;
+import com.alex.controlers.EditCompanyTabController;
+import com.alex.controlers.HistoryTabController;
 import com.alex.controlers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,12 @@ public class ConfigurationControllers {
     public View getEditCompany() throws IOException {
         return loadView("fxml/editCompany.fxml");
     }
+
+    @Bean(name = "history")
+    public View getHistory() throws IOException {
+        return loadView("fxml/history.fxml");
+    }
+
     /**
      * Именно благодаря этому методу мы добавили контроллер в контекст спринга,
      * и заставили его сделать произвести все необходимые инъекции.
@@ -32,8 +39,13 @@ public class ConfigurationControllers {
     }
 
     @Bean
-    public EditCompanyController getEditCompanyController() throws IOException {
-        return (EditCompanyController) getEditCompany().getController();
+    public EditCompanyTabController getEditCompanyController() throws IOException {
+        return (EditCompanyTabController) getEditCompany().getController();
+    }
+
+    @Bean
+    public HistoryTabController getHistoryTabController() throws IOException {
+        return (HistoryTabController) getHistory().getController();
     }
 
     /**

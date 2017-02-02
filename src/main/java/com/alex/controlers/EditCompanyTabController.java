@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.IOException;
 
-public class EditCompanyController {
+public class EditCompanyTabController {
 
     @FXML
     private TextField companyName;
@@ -56,7 +56,7 @@ public class EditCompanyController {
     @FXML
     public void openModal(Company company) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(EditCompanyController.class.getResource("/fxml/editCompany.fxml"));
+        loader.setLocation(EditCompanyTabController.class.getResource("/fxml/editCompany.fxml"));
         AnchorPane anchorPane = (AnchorPane) loader.load();
 
         Stage stage = new Stage();

@@ -42,4 +42,13 @@ public class SendingEmailHistory {
     public void setSentDate(Date sentDate) {
         this.sentDate = sentDate;
     }
+
+    @Override
+    public String toString() {
+        return "SendingEmailHistory{" +
+                "id=" + id +
+                ", companyId=" + companyId +
+                ", sentDate=" + sentDate +
+                '}';
+    }
 }

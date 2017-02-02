@@ -7,9 +7,11 @@ import com.alex.service.CompanyService;
 import com.alex.service.MailSendService;
 import com.alex.service.SendingEmailHistoryService;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-public class MainController{
+public class MainController {
 
     @FXML
     private TextField companyName;
@@ -81,7 +83,7 @@ public class MainController{
     private CompanyService companyService;
 
     @Autowired
-    private EditCompanyController editCompanyController;
+    private EditCompanyTabController editCompanyTabController;
 
     @Autowired
     private MailSendService mailSendService;
@@ -92,9 +94,12 @@ public class MainController{
     @Autowired
     private SendingEmailHistoryService historyService;
 
+    @Autowired
+    private HistoryTabController historyTabController;
+
     @SuppressWarnings("unchecked")
     @PostConstruct
-    public void init(){
+    public void init() {
         id.setCellValueFactory(new PropertyValueFactory<Company, Long>("id"));
         name.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
         email.setCellValueFactory(new PropertyValueFactory<Company, String>("email"));
@@ -110,12 +115,25 @@ public class MainController{
         sentCv.setItems(observableData.getAll());
 
         sentCv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        sentCv.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    try {
+                        Company company = sentCv.getSelectionModel().getSelectedItem();
+                        historyTabController.openModal(company);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         successfully.setText("");
     }
 
     @FXML
     public void saveCompany() {
-        if(companyName.getText().equals("") && companyEmail.getText().equals("") && companyPhone.getText().equals(""))
+        if (companyName.getText().equals("") && companyEmail.getText().equals("") && companyPhone.getText().equals(""))
             return;
 
         Company company = new Company();
@@ -132,10 +150,10 @@ public class MainController{
     }
 
     @FXML
-    public void removeSelected(){
+    public void removeSelected() {
         Company company = tableCompanies.getSelectionModel().getSelectedItem();
         tableCompanies.getSelectionModel().clearSelection();
-        if(company == null)
+        if (company == null)
             return;
         companyService.delete(company.getId());
         observableData.remove(company);
@@ -144,22 +162,22 @@ public class MainController{
     @FXML
     public void editCompany() throws IOException {
         Company company = tableCompanies.getSelectionModel().getSelectedItem();
-        if(company == null)
+        if (company == null)
             return;
-        editCompanyController.openModal(company);
+        editCompanyTabController.openModal(company);
     }
 
     @FXML
-    public void sendMessage(){
+    public void sendMessage() {
         ObservableList<Company> companyList = sentCv.getSelectionModel().getSelectedItems();
 
-        for(Company selected : companyList) {
+        for (Company selected : companyList) {
             String from = fromField.getText();
             String to = selected.getEmail();
             String subject = subjectField.getText();
             String textMessage = messageField.getText();
             String attached = filePath.getText();
-//            mailSendService.sendEmail(from, to, subject, textMessage, attached);
+            mailSendService.sendEmail(from, to, subject, textMessage, attached);
 
             SendingEmailHistory history = new SendingEmailHistory();
             history.setCompanyId(selected.getId());
@@ -175,11 +193,11 @@ public class MainController{
         successfully.setText("Mail was sent");
     }
 
-    public void attachFile(){
+    public void attachFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("choose file");
         File file = fileChooser.showOpenDialog(browse.getScene().getWindow());
-        if(file != null){
+        if (file != null) {
             String filePath = file.getPath();
             this.filePath.setText(filePath);
         }
