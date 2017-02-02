@@ -14,7 +14,7 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository companyRepository;
 
     @Override
-    public Company addCompany(Company company) {
+    public Company create(Company company) {
         if(company != null) {
             company = companyRepository.saveAndFlush(company);
         }

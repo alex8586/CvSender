@@ -1,9 +1,11 @@
 package com.alex.controlers;
 
 import com.alex.domain.Company;
+import com.alex.domain.SendingEmailHistory;
 import com.alex.repositories.ObservableData;
 import com.alex.service.CompanyService;
 import com.alex.service.MailSendService;
+import com.alex.service.SendingEmailHistoryService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -87,6 +89,9 @@ public class MainController{
     @Autowired
     private ObservableData observableData;
 
+    @Autowired
+    private SendingEmailHistoryService historyService;
+
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init(){
@@ -118,7 +123,7 @@ public class MainController{
         company.setEmail(companyEmail.getText());
         company.setPhone(companyPhone.getText());
         company.setTimesSent(0);
-        companyService.addCompany(company);
+        companyService.create(company);
         observableData.add(company);
 
         companyName.setText("");
@@ -154,7 +159,12 @@ public class MainController{
             String subject = subjectField.getText();
             String textMessage = messageField.getText();
             String attached = filePath.getText();
-            mailSendService.sendEmail(from, to, subject, textMessage, attached);
+//            mailSendService.sendEmail(from, to, subject, textMessage, attached);
+
+            SendingEmailHistory history = new SendingEmailHistory();
+            history.setCompanyId(selected.getId());
+            history.setSentDate(new Date());
+            historyService.create(history);
 
             selected.setLastTimeSent(new Date());
             selected.setTimesSent(selected.getTimesSent() + 1);
