@@ -56,7 +56,7 @@ public class HistoryTabController {
 
     @FXML
     public void openModal(Company company) throws IOException {
-        System.out.println("in historyController company  = " + company.toString());
+        observableList.clear();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(EditCompanyTabController.class.getResource("/fxml/history.fxml"));
         AnchorPane anchorPane = (AnchorPane) loader.load();

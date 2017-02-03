@@ -17,7 +17,7 @@ public class MailSendService {
 
     private Properties props = new Properties();
 
-    public void sendEmail(String from, String to, String subject, String textMessage, String filePath) {
+    public void sendEmail(String from, String to, String subject, String textMessage, String filePath) throws MessagingException{
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -31,7 +31,6 @@ public class MailSendService {
                     }
                 });
 
-        try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
@@ -54,8 +53,5 @@ public class MailSendService {
             }
             Transport.send(message);
 
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -7,6 +7,7 @@ import com.alex.service.CompanyService;
 import com.alex.service.MailSendService;
 import com.alex.service.SendingEmailHistoryService;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,6 +17,7 @@ import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -79,6 +81,9 @@ public class MainController {
     @FXML
     private Label successfully;
 
+    @FXML
+    private Tab companyTab;
+
     @Autowired
     private CompanyService companyService;
 
@@ -115,6 +120,14 @@ public class MainController {
         sentCv.setItems(observableData.getAll());
 
         sentCv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        handleEventForHistoryModalWindow();
+        handleEventForClearingSuccessfullyLabel();
+
+        successfully.setText("");
+    }
+
+    public void handleEventForHistoryModalWindow(){
         sentCv.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -128,7 +141,16 @@ public class MainController {
                 }
             }
         });
-        successfully.setText("");
+    }
+
+    public void handleEventForClearingSuccessfullyLabel(){
+        companyTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                successfully.setStyle("");
+                successfully.setText("");
+            }
+        });
     }
 
     @FXML
@@ -177,7 +199,15 @@ public class MainController {
             String subject = subjectField.getText();
             String textMessage = messageField.getText();
             String attached = filePath.getText();
-            mailSendService.sendEmail(from, to, subject, textMessage, attached);
+
+            try {
+                mailSendService.sendEmail(from, to, subject, textMessage, attached);
+            } catch (MessagingException e) {
+                successfully.setStyle("-fx-text-fill: red");
+                successfully.setText("Error during sending email");
+                setSendEmailFieldsEmpty();
+                return;
+            }
 
             SendingEmailHistory history = new SendingEmailHistory();
             history.setCompanyId(selected.getId());
@@ -188,6 +218,8 @@ public class MainController {
             selected.setTimesSent(selected.getTimesSent() + 1);
             companyService.editCompany(selected);
         }
+            setSendEmailFieldsEmpty();
+
         observableData.clear();
         observableData.addAll(companyService.getAll());
         successfully.setText("Mail was sent");
@@ -201,6 +233,13 @@ public class MainController {
             String filePath = file.getPath();
             this.filePath.setText(filePath);
         }
+    }
+
+    public void setSendEmailFieldsEmpty(){
+        fromField.setText("");
+        subjectField.setText("");
+        messageField.setText("");
+        filePath.setText("");
     }
 }
 
