@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,6 +15,6 @@
       <Button fx:id="btnCancel" layoutX="160.0" layoutY="146.0" mnemonicParsing="false" onAction="#cancelEdit" prefWidth="80.0" text="Cancel" />
       <Button fx:id="btnOk" layoutX="260.0" layoutY="146.0" mnemonicParsing="false" onAction="#editCompany" prefWidth="80.0" text="Ok" />
       <Label layoutX="25.0" layoutY="150.0" text="Id " />
-      <Label fx:id="idLabel" layoutX="38.0" layoutY="150.0" prefHeight="17.0" prefWidth="30.0" />
+      <Label fx:id="idLabel" layoutX="38.0" layoutY="150.0" prefHeight="17.0" prefWidth="43.0" />
    </children>
 </AnchorPane>
