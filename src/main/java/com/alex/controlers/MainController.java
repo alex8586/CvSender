@@ -191,8 +191,13 @@ public class MainController {
 
     @FXML
     public void sendMessage() {
+        successfully.setStyle("");
         ObservableList<Company> companyList = sentCv.getSelectionModel().getSelectedItems();
-
+        if(companyList.isEmpty()){
+            successfully.setStyle("-fx-text-fill: red");
+            successfully.setText("Company is not selected");
+            return;
+        }
         for (Company selected : companyList) {
             String from = fromField.getText();
             String to = selected.getEmail();
