@@ -22,8 +22,8 @@ public class Company {
     private String email;
     @Column(name = "phone")
     private String phone;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "last_sent")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_sent", columnDefinition = "DATETIME")
     private Date lastTimeSent;
     @Column(name = "times_sent",nullable = false, columnDefinition = "int default 0")
     private Integer timesSent;

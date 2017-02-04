@@ -15,8 +15,8 @@ public class SendingEmailHistory {
     @Column(name = "company_id")
     private long companyId;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "sent_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "sent_date", columnDefinition = "DATETIME")
     private Date sentDate;
 
     public long getId() {
