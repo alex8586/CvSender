@@ -52,6 +52,5 @@ public class MailSendService {
                 message.setText(textMessage);
             }
             Transport.send(message);
-
     }
 }

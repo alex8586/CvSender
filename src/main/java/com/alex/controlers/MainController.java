@@ -127,7 +127,7 @@ public class MainController {
         successfully.setText("");
     }
 
-    public void handleEventForHistoryModalWindow(){
+    private void handleEventForHistoryModalWindow(){
         sentCv.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -143,7 +143,7 @@ public class MainController {
         });
     }
 
-    public void handleEventForClearingSuccessfullyLabel(){
+    private void handleEventForClearingSuccessfullyLabel(){
         companyTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
@@ -240,7 +240,7 @@ public class MainController {
         }
     }
 
-    public void setSendEmailFieldsEmpty(){
+    private void setSendEmailFieldsEmpty(){
         fromField.setText("");
         subjectField.setText("");
         messageField.setText("");

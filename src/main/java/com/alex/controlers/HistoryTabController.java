@@ -55,7 +55,7 @@ public class HistoryTabController {
     private ObservableList<SendingEmailHistory> observableList = FXCollections.observableArrayList();
 
     @FXML
-    public void openModal(Company company) throws IOException {
+    void openModal(Company company) throws IOException {
         observableList.clear();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(EditCompanyTabController.class.getResource("/fxml/history.fxml"));

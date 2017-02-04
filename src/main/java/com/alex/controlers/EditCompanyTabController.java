@@ -54,7 +54,7 @@ public class EditCompanyTabController {
     private ObservableData observableData;
 
     @FXML
-    public void openModal(Company company) throws IOException {
+    void openModal(Company company) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(EditCompanyTabController.class.getResource("/fxml/editCompany.fxml"));
         AnchorPane anchorPane = (AnchorPane) loader.load();

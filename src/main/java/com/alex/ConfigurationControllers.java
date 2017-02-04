@@ -29,10 +29,6 @@ public class ConfigurationControllers {
         return loadView("fxml/history.fxml");
     }
 
-    /**
-     * Именно благодаря этому методу мы добавили контроллер в контекст спринга,
-     * и заставили его сделать произвести все необходимые инъекции.
-     */
     @Bean
     public MainController getMainController() throws IOException {
         return (MainController) getMainView().getController();
@@ -48,11 +44,6 @@ public class ConfigurationControllers {
         return (HistoryTabController) getHistory().getController();
     }
 
-    /**
-     * Самый обыкновенный способ использовать FXML загрузчик.
-     * Как раз-таки на этом этапе будет создан объект-контроллер,
-     * произведены все FXML инъекции и вызван метод инициализации контроллера.
-     */
     protected View loadView(String url) throws IOException {
         InputStream fxmlStream = null;
         try {
@@ -67,10 +58,6 @@ public class ConfigurationControllers {
         }
     }
 
-    /**
-     * Класс - оболочка: контроллер мы обязаны указать в качестве бина,
-     * а view - представление, нам предстоит использовать в точке входа {@link Application}.
-     */
     public class View {
         private Parent view;
         private Object controller;
