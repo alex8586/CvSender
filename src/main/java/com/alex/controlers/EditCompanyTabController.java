@@ -81,11 +81,14 @@ public class EditCompanyTabController {
 
     @FXML
     public void editCompany(ActionEvent event){
+        Company current = companyService.getById(Long.parseLong(idLabel.getText()));
         Company company = new Company();
         company.setId(Long.parseLong(idLabel.getText()));
         company.setName(companyName.getText());
         company.setEmail(companyEmail.getText());
         company.setPhone(companyPhone.getText());
+        company.setLastTimeSent(current.getLastTimeSent());
+        company.setTimesSent(current.getTimesSent());
 
         companyService.editCompany(company);
         ObservableList<Company> list = observableData.getAll();

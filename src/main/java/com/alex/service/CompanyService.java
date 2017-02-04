@@ -15,4 +15,6 @@ public interface CompanyService {
     Company editCompany(Company company);
 
     List<Company> getAll();
+
+    Company getById(long id);
 }

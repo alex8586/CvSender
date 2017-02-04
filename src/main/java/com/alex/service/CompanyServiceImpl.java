@@ -43,4 +43,9 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> getAll() {
         return companyRepository.findAll();
     }
+
+    @Override
+    public Company getById(long id) {
+        return companyRepository.findOne(id);
+    }
 }
