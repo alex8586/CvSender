@@ -1,6 +1,7 @@
 package com.alex;
 
 import com.alex.controlers.EditCompanyTabController;
+import com.alex.controlers.EditEmailTabController;
 import com.alex.controlers.HistoryTabController;
 import com.alex.controlers.MainController;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,11 @@ public class ConfigurationControllers {
         return loadView("fxml/history.fxml");
     }
 
+    @Bean(name = "editEmail")
+    public View getEmail() throws IOException{
+        return loadView("fxml/editEmail.fxml");
+    }
+
     @Bean
     public MainController getMainController() throws IOException {
         return (MainController) getMainView().getController();
@@ -44,7 +50,12 @@ public class ConfigurationControllers {
         return (HistoryTabController) getHistory().getController();
     }
 
-    protected View loadView(String url) throws IOException {
+    @Bean
+    public EditEmailTabController getEditEmailTabController() throws IOException {
+        return (EditEmailTabController) getEmail().getController();
+    }
+
+    private View loadView(String url) throws IOException {
         InputStream fxmlStream = null;
         try {
             fxmlStream = getClass().getClassLoader().getResourceAsStream(url);
@@ -67,7 +78,7 @@ public class ConfigurationControllers {
             this.controller = controller;
         }
 
-        public Parent getView() {
+        Parent getView() {
             return view;
         }
 
@@ -75,7 +86,7 @@ public class ConfigurationControllers {
             this.view = view;
         }
 
-        public Object getController() {
+        Object getController() {
             return controller;
         }
 

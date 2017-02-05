@@ -17,7 +17,8 @@ public class MailSendService {
 
     private Properties props = new Properties();
 
-    public void sendEmail(String from, String to, String subject, String textMessage, String filePath) throws MessagingException{
+    public void sendEmail(String from, String to, String subject, String textMessage, String filePath,
+                          String email, String password) throws MessagingException{
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -27,7 +28,7 @@ public class MailSendService {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("","");//type your login and password here
+                        return new PasswordAuthentication(email, password);
                     }
                 });
 

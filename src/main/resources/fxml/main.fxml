@@ -10,19 +10,33 @@
          <content>
             <VBox prefHeight="405.0" prefWidth="591.0">
                <children>
-                  <AnchorPane prefHeight="70.0">
+                  <AnchorPane prefHeight="60.0">
                      <children>
-                        <TextField fx:id="companyName" layoutX="37.0" layoutY="20.0" promptText="company" />
-                        <TextField fx:id="companyEmail" layoutX="206.0" layoutY="20.0" promptText="email" />
-                        <TextField fx:id="companyPhone" layoutX="375.0" layoutY="20.0" promptText="phone" />
-                        <Button layoutX="567.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveCompany" prefHeight="25.0" prefWidth="80.0" text="Add" textAlignment="CENTER" />
+                        <Label fx:id="workAs" layoutX="216.0" layoutY="17.0" prefHeight="17.0" prefWidth="136.0" text="You need add email data" />
+                        <Label fx:id="currentEmail" layoutX="360.0" layoutY="17.0" prefHeight="17.0" prefWidth="283.0" />
+                        <Button fx:id="changeEmailUser" onAction="#editEmailUser" layoutX="121.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Change" />
+                        <Button fx:id="removeEmailUser" onAction="#removeEmailUser" layoutX="20.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Remove" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="90.0">
+                  <AnchorPane prefHeight="50.0">
                      <children>
-                        <Button layoutX="207.0" layoutY="45.0" mnemonicParsing="false" onAction="#removeSelected" prefHeight="25.0" prefWidth="80.0" text="Remove" textAlignment="CENTER" />
-                        <Button layoutX="109.0" layoutY="45.0" mnemonicParsing="false" onAction="#editCompany" prefHeight="25.0" prefWidth="80.0" text="Edit" textAlignment="CENTER" />
+                        <TextField fx:id="companyName" layoutX="37.0" layoutY="13.0" promptText="company" />
+                        <TextField fx:id="companyEmail" layoutX="204.0" layoutY="13.0" promptText="email" />
+                        <TextField fx:id="companyPhone" layoutX="374.0" layoutY="13.0" promptText="phone" />
+                        <Button layoutX="563.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveCompany" prefHeight="25.0" prefWidth="80.0" text="Add" textAlignment="CENTER" />
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="50.0">
+                     <children>
+                        <Button layoutX="223.0" layoutY="13.0" mnemonicParsing="false" onAction="#removeSelected" prefHeight="25.0" prefWidth="80.0" text="Remove" textAlignment="CENTER" />
+                        <Button layoutX="61.0" layoutY="13.0" mnemonicParsing="false" onAction="#editCompany" prefHeight="25.0" prefWidth="80.0" text="Edit" textAlignment="CENTER" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </AnchorPane>
                   <AnchorPane VBox.vgrow="ALWAYS">
                      <children>

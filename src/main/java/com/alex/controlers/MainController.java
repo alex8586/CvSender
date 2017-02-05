@@ -1,12 +1,15 @@
 package com.alex.controlers;
 
 import com.alex.domain.Company;
+import com.alex.domain.User;
 import com.alex.domain.SendingEmailHistory;
 import com.alex.repositories.ObservableData;
 import com.alex.service.CompanyService;
+import com.alex.service.EmailUserService;
 import com.alex.service.MailSendService;
 import com.alex.service.SendingEmailHistoryService;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,90 +24,95 @@ import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class MainController {
 
-    @FXML
-    private TextField companyName;
+    @FXML private Label workAs;
 
-    @FXML
-    private TextField companyEmail;
+    @FXML private Label currentEmail;
 
-    @FXML
-    private TextField companyPhone;
+    @FXML private Button changeEmailUser;
 
-    @FXML
-    private TableColumn<Company, Long> id;
+    @FXML private Button removeEmailUser;
 
-    @FXML
-    private TableColumn<Company, String> name;
+    @FXML private TextField companyName;
 
-    @FXML
-    private TableColumn<Company, String> email;
+    @FXML private TextField companyEmail;
 
-    @FXML
-    private TableColumn<Company, String> phone;
+    @FXML private TextField companyPhone;
 
-    @FXML
-    private TableView<Company> tableCompanies;
+    @FXML private TableColumn<Company, Long> id;
 
-    @FXML
-    private TableView<Company> sentCv;
+    @FXML private TableColumn<Company, String> name;
 
-    @FXML
-    private TableColumn<Company, Long> sendCvId;
+    @FXML private TableColumn<Company, String> email;
 
-    @FXML
-    private TableColumn<Company, String> company;
+    @FXML private TableColumn<Company, String> phone;
 
-    @FXML
-    private TableColumn<Company, Date> lastSent;
+    @FXML private TableView<Company> tableCompanies;
 
-    @FXML
-    private TableColumn<Company, Integer> times;
+    @FXML private TableView<Company> sentCv;
 
-    @FXML
-    private TextField fromField;
+    @FXML private TableColumn<Company, Long> sendCvId;
 
-    @FXML
-    private TextField subjectField;
+    @FXML private TableColumn<Company, String> company;
 
-    @FXML
-    private TextArea messageField;
+    @FXML private TableColumn<Company, Date> lastSent;
 
-    @FXML
-    private Button browse;
+    @FXML private TableColumn<Company, Integer> times;
 
-    @FXML
-    private TextField filePath;
+    @FXML private TextField fromField;
 
-    @FXML
-    private Label successfully;
+    @FXML private TextField subjectField;
 
-    @FXML
-    private Tab companyTab;
+    @FXML private TextArea messageField;
 
-    @Autowired
-    private CompanyService companyService;
+    @FXML private Button browse;
+
+    @FXML private TextField filePath;
+
+    @FXML private Label successfully;
+
+    @FXML private Tab companyTab;
 
     @Autowired
     private EditCompanyTabController editCompanyTabController;
 
     @Autowired
+    private HistoryTabController historyTabController;
+
+    @Autowired
+    private EditEmailTabController editEmailTabController;
+
+    @Autowired
     private MailSendService mailSendService;
 
     @Autowired
-    private ObservableData observableData;
+    private CompanyService companyService;
 
     @Autowired
     private SendingEmailHistoryService historyService;
 
     @Autowired
-    private HistoryTabController historyTabController;
+    private EmailUserService emailUserService;
+
+    @Autowired
+    private ObservableData observableData;
 
     @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
+        List<User> userList = emailUserService.getAll();
+        if(userList.isEmpty()){
+            workAs.setStyle("-fx-text-fill: red");
+            workAs.setText("You need add email data");
+        }else {
+            User currentUser = userList.get(0);
+            workAs.setText("You work as ");
+            currentEmail.setText(currentUser.getEmail());
+        }
+
         id.setCellValueFactory(new PropertyValueFactory<Company, Long>("id"));
         name.setCellValueFactory(new PropertyValueFactory<Company, String>("name"));
         email.setCellValueFactory(new PropertyValueFactory<Company, String>("email"));
@@ -123,7 +131,6 @@ public class MainController {
 
         handleEventForHistoryModalWindow();
         handleEventForClearingSuccessfullyLabel();
-
         successfully.setText("");
     }
 
@@ -151,6 +158,14 @@ public class MainController {
                 successfully.setText("");
             }
         });
+    }
+
+     Label getCurrentEmail(){
+        return currentEmail;
+    }
+
+     Label getWorkAs(){
+        return workAs;
     }
 
     @FXML
@@ -190,7 +205,27 @@ public class MainController {
     }
 
     @FXML
+    public void editEmailUser(ActionEvent actionEvent){
+        try {
+            editEmailTabController.openModal();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void removeEmailUser(ActionEvent actionEvent){
+        User current = emailUserService.getAll().get(0);
+        emailUserService.delete(current);
+
+        workAs.setStyle("-fx-text-fill: red");
+        workAs.setText("You need add email data");
+        currentEmail.setText("");
+    }
+
+    @FXML
     public void sendMessage() {
+        User current = emailUserService.getAll().get(0);
         successfully.setStyle("");
         ObservableList<Company> companyList = sentCv.getSelectionModel().getSelectedItems();
         if(companyList.isEmpty()){
@@ -206,7 +241,8 @@ public class MainController {
             String attached = filePath.getText();
 
             try {
-                mailSendService.sendEmail(from, to, subject, textMessage, attached);
+                mailSendService.sendEmail(from, to, subject, textMessage, attached,
+                                          current.getEmail(), current.getPassword());
             } catch (MessagingException e) {
                 successfully.setStyle("-fx-text-fill: red");
                 successfully.setText("Error during sending email");

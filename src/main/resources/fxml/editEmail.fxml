@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="editEmail" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alex.controlers.EditEmailTabController">
+   <children>
+      <Label layoutX="41.0" layoutY="60.0" prefHeight="17.0" prefWidth="37.0" text="Email" />
+      <Label layoutX="41.0" layoutY="101.0" text="Password" />
+      <Button fx:id="btnCancel" onAction="#cancelEdit" layoutX="133.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Cancel" />
+      <Button fx:id="btnOk" onAction="#editEmail" layoutX="251.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Ok" />
+      <TextField fx:id="email" layoutX="107.0" layoutY="56.0" prefHeight="25.0" prefWidth="249.0" promptText="email" />
+      <TextField fx:id="password" layoutX="107.0" layoutY="97.0" prefHeight="25.0" prefWidth="249.0" promptText="password" />
+      <Label layoutX="107.0" layoutY="20.0" prefHeight="20.0" prefWidth="249.0" text="Please enter your email and password">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -17,7 +17,7 @@ public class MainApp extends AbstractJavaFxApplicationSupport {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Mail Sender");
+        stage.setTitle("Email Sender");
         stage.setScene(new Scene(view.getView()));
         stage.setResizable(true);
         stage.setMinWidth(600);
